@@ -1,0 +1,17 @@
+[Unit]
+Description=Exports the journal over VSOCK
+After=systemd-journald.service
+After=network.target
+Requires=network.target
+# Only try to restart once per interval - if it fails to restart once,
+# it will fail again.
+StartLimitBurst=2
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/journal-vsock-export
+OOMScoreAdjust=-1000
+Restart=on-failure
+
+[Install]
+WantedBy=basic.target

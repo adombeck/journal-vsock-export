@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eu
+
+VSOCK_PORT=${VSOCK_PORT:-52000}
+
+while true; do
+    journalctl -b --lines=all -o export -f | socat - "VSOCK-CONNECT:2:${VSOCK_PORT}"
+done
